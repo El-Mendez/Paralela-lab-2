@@ -1,1 +1,0 @@
-# Paralela-lab-2
