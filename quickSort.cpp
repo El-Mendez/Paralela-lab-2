@@ -1,5 +1,5 @@
 #include <omp.h>
-#define ARRAY_SIZE_THRESHOLD 50
+#define ARRAY_SIZE_THRESHOLD 3
 
 void swap(int* x, int* y) {
     int tmp = *x;
@@ -65,9 +65,9 @@ void quickSortParallel(int data[], int len) {
     // move the pivot to the appropriate location
     swap(data + lower, data + len-1);
 
-    #pragma omp task default(none) private(lower) shared(data)
+    #pragma omp task default(none) shared(data, lower)
     quickSortParallel(data, lower);
 
-    #pragma omp task default(none) private(lower, len) shared(data)
+    #pragma omp task default(none) shared(data, lower, len)
     quickSortParallel(data + lower + 1, len - lower - 1);
 }
